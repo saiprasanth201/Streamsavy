@@ -1,3 +1,72 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  :root {
+    font-family: 'Poppins', 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont,
+      'Helvetica Neue', Arial, sans-serif;
+    color-scheme: dark;
+    font-size: 16px;
+    line-height: 1.6;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  html,
+  body,
+  #root {
+    @apply min-h-screen bg-surface text-white antialiased;
+  }
+
+  body {
+    @apply m-0 bg-app-gradient text-white transition-colors duration-300 ease-out;
+  }
+
+  html:not(.dark) body {
+    @apply bg-[#f7f7fb] text-surface-muted;
+  }
+
+  a {
+    @apply text-inherit no-underline;
+  }
+
+  img {
+    @apply block max-w-full;
+  }
+
+  button,
+  input {
+    font-family: inherit;
+  }
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #e50914 rgba(255, 255, 255, 0.08);
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #e50914, #c40808);
+    border-radius: 999px;
+  }
+
+  html:not(.dark) * {
+    scrollbar-color: #e50914 rgba(0, 0, 0, 0.08);
+  }
+
+  html:not(.dark) ::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.05);
+  }
+}

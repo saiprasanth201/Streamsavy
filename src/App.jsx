@@ -23,6 +23,7 @@ import Settings from './pages/Settings.jsx';
 import Help from './pages/Help.jsx';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
 import NotFound from './pages/NotFound.jsx';
+import './App.css';
 
 const AppRoutes = ({ homeSearchTerm, onClearHomeSearch }) => {
   const location = useLocation();
