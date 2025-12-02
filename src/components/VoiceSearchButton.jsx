@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import { FiMic, FiMicOff } from 'react-icons/fi';
 import { motion } from 'framer-motion';
 
@@ -6,66 +6,89 @@ const VoiceSearchButton = ({ onVoiceResult, disabled }) => {
   const [isListening, setIsListening] = useState(false);
   const [isSupported, setIsSupported] = useState(false);
   const recognitionRef = useRef(null);
+  const onVoiceResultRef = useRef(onVoiceResult);
 
   useEffect(() => {
-    // Check if Web Speech API is supported
-    if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
-      setIsSupported(true);
-      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-      recognitionRef.current = new SpeechRecognition();
-      recognitionRef.current.continuous = false;
-      recognitionRef.current.interimResults = false;
-      recognitionRef.current.lang = 'en-US';
+    onVoiceResultRef.current = onVoiceResult;
+  }, [onVoiceResult]);
 
-      recognitionRef.current.onstart = () => {
-        setIsListening(true);
-      };
+  useEffect(() => {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
-      recognitionRef.current.onresult = (event) => {
-        const transcript = event.results[0][0].transcript;
-        onVoiceResult(transcript);
-        setIsListening(false);
-      };
-
-      recognitionRef.current.onerror = (event) => {
-        console.error('Speech recognition error:', event.error);
-        setIsListening(false);
-        // Handle specific errors
-        if (event.error === 'not-allowed') {
-          alert('Microphone permission denied. Please allow microphone access to use voice search.');
-        } else if (event.error === 'no-speech') {
-          alert('No speech detected. Please try again.');
-        } else {
-          alert('Voice search failed. Please try again.');
-        }
-      };
-
-      recognitionRef.current.onend = () => {
-        setIsListening(false);
-      };
-    } else {
+    if (!SpeechRecognition) {
       setIsSupported(false);
+      return;
     }
+
+    setIsSupported(true);
+    const recognition = new SpeechRecognition();
+    recognition.continuous = false;
+    recognition.interimResults = false;
+    recognition.lang = 'en-US';
+
+    recognition.onstart = () => {
+      setIsListening(true);
+    };
+
+    recognition.onresult = (event) => {
+      const transcript = event.results[0][0].transcript;
+      if (onVoiceResultRef.current) {
+        onVoiceResultRef.current(transcript);
+      }
+    };
+
+    recognition.onerror = (event) => {
+      console.error('Speech recognition error:', event.error);
+      setIsListening(false);
+
+      if (event.error === 'not-allowed') {
+        alert('Microphone permission denied. Please allow microphone access to use voice search.');
+      } else if (event.error === 'no-speech') {
+        alert('No speech detected. Please try again.');
+      } else if (event.error !== 'aborted') {
+        alert('Voice search failed. Please try again.');
+      }
+    };
+
+    recognition.onend = () => {
+      setIsListening(false);
+    };
+
+    recognitionRef.current = recognition;
 
     return () => {
       if (recognitionRef.current) {
-        recognitionRef.current.stop();
+        try {
+          recognitionRef.current.abort();
+        } catch (error) {
+          console.error('Error stopping recognition:', error);
+        }
       }
     };
-  }, [onVoiceResult]);
+  }, []);
 
-  const handleClick = () => {
-    if (!isSupported) {
+  const handleClick = useCallback(() => {
+    if (!isSupported || !recognitionRef.current) {
       alert('Voice search is not supported in this browser. Please use a modern browser like Chrome or Edge.');
       return;
     }
 
     if (isListening) {
-      recognitionRef.current.stop();
+      try {
+        recognitionRef.current.stop();
+      } catch (error) {
+        console.error('Error stopping recognition:', error);
+        setIsListening(false);
+      }
     } else {
-      recognitionRef.current.start();
+      try {
+        recognitionRef.current.start();
+      } catch (error) {
+        console.error('Error starting recognition:', error);
+        alert('Could not start voice recognition. Please try again.');
+      }
     }
-  };
+  }, [isListening, isSupported]);
 
   if (!isSupported) {
     return null; // Don't render if not supported
