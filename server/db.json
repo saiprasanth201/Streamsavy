@@ -1,0 +1,79 @@
+{
+  "movies": [
+    {
+      "id": "1",
+      "title": "Student",
+      "overview": "A sample YouTube video to demonstrate the custom movie functionality.",
+      "poster_path": "https://img.youtube.com/vi/_EDeCGAYUBM/maxresdefault.jpg",
+      "backdrop_path": "https://img.youtube.com/vi/_EDeCGAYUBM/maxresdefault.jpg",
+      "release_date": "2024-01-01",
+      "vote_average": 8.5,
+      "vote_count": 100,
+      "genre_ids": [],
+      "video_url": "https://youtu.be/_EDeCGAYUBM?si=ma8fqxxXtl5NkMCa",
+      "adult": false,
+      "original_language": "en",
+      "original_title": "Student",
+      "popularity": 100,
+      "video": true,
+      "credits": {
+        "cast": [
+          {
+            "cast_id": 1,
+            "name": "Prabhas",
+            "character": "Bhairava"
+          },
+          {
+            "cast_id": 2,
+            "name": "Amitabh Bachchan",
+            "character": "Ashwatthama"
+          },
+          {
+            "cast_id": 3,
+            "name": "Kamal Haasan",
+            "character": "Supreme Yaskin"
+          },
+          {
+            "cast_id": 4,
+            "name": "Deepika Padukone",
+            "character": "Sum-80"
+          },
+          {
+            "cast_id": 5,
+            "name": "Disha Patani",
+            "character": "Roxie"
+          }
+        ],
+        "crew": [
+          {
+            "credit_id": "c1",
+            "name": "Nag Ashwin",
+            "job": "Director"
+          },
+          {
+            "credit_id": "c2",
+            "name": "Vyjayanthi Movies",
+            "job": "Production"
+          }
+        ]
+      }
+    },
+    {
+      "id": "7602",
+      "title": "surya s/o krishna",
+      "video_url": "https://youtu.be/HDK0Z4hbqJY?si=R1ifuexmnaa55COL",
+      "overview": "YouTube video by Cinima Nagar",
+      "poster_path": "https://img.youtube.com/vi/HDK0Z4hbqJY/maxresdefault.jpg",
+      "backdrop_path": "https://img.youtube.com/vi/HDK0Z4hbqJY/maxresdefault.jpg",
+      "release_date": "2008-11-14",
+      "vote_average": 9,
+      "vote_count": 0,
+      "genre_ids": [],
+      "adult": false,
+      "original_language": "en",
+      "original_title": "surya s/o krishna",
+      "popularity": 0,
+      "video": true
+    }
+  ]
+}
