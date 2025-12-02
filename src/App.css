@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 @layer components {
   /* Buttons */
   .btn {
@@ -419,7 +423,7 @@
   }
 
   .splash-screen__video {
-    @apply h-full w-full object-cover brightness-110 contrast-105 blur-sm;
+    @apply h-full w-full object-cover brightness-110 contrast-125 blur-sm;
   }
 
   .splash-screen__content {
